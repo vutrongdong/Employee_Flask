@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+{{ utils.flashed_messages() }}
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a href="{{ url_for('update_employee', employee_id=employee.id) }}" class="btn btn-primary btn-sm m-1">Update</a>
+      <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+        delete
+      </button>
+      <a class="btn btn-success btn-sm ml-1" href="{{ url_for('list_employee') }}">Trở về</a>
+    </div>
+    <div class="row">
+      {% if employee.images %}
+      <div class='col-md-3'>
+        <img width=100% height="97%" src="../static/profile_pics/{{ employee.images }}" alt="">
+      </div>
+      {% endif %}
+      <div class='col-md-7'>
+        <h2>{{ employee.name }}</h2>
+        <p class="article-content">Email: {{ employee.email }}</p>
+        <p class="article-content">Địa chỉ: {{ employee.address }}</p>
+        <p class="article-content">Số điện thoại: {{ employee.phone }}</p>
+        {% if employee.gender == 0 %}
+        <p class="article-content">Giới tính: Nữ </p>
+        {% elif employee.gender == 1 %}
+        <p class="article-content">Giới tính: Nam </p>
+        {% else %}
+        <p class="article-content">Giới tính: Khác </p>
+        {% endif %}
+        <p class="article-content">Ngày sinh: {{ employee.date_of_birth }}</p>
+      </div>
+    </div>
+  </div>
+</article>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Xác nhận</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc muốn xóa người này!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy</button>
+        <form action="{{ url_for('delete_employee', employee_id=employee.id) }}" method="POST">
+          <button type="submit" class="btn btn-danger">Đồng ý</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

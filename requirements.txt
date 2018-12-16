@@ -1,0 +1,9 @@
+flask
+psycopg2
+flask-Migrate
+flask-SQLAlchemy
+flask_wtf
+wtforms
+flask-bootstrap
+Flask-Migrate
+Pillow

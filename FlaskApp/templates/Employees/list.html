@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+{{ utils.flashed_messages() }}
+<div class="row">
+  <div class="col-md-8">
+    <h3>Danh sách nhân viên <a class="btn btn-primary mb-2" href="/employee/new">Thêm mới</a></h3>
+  </div>
+</div>
+<div style="border-bottom: 2px solid red"></div>
+<div class="row pl-3 mt-3 mb-2" style="">
+  <div class="col-md-1" style="flex-basis: 40px;">#</div>
+  <div class="col-md-3">Tên</div>
+  <div class="col-md-3">Email</div>
+  <div class="col-md-2" style="margin-left: -7px">Số điện thoại</div>
+  <div class="col-md-2"> Hành động</div>
+</div>
+{% for employee in employees %}
+<article class="content-section" style="margin-bottom: 2px;">
+  <div class="row">
+    <div class="col-md-1" style="flex-basis: 40px;">{{ loop.index }}</div>
+    <div class="col-md-3">
+      {{ employee.name }}
+      {% if employee.gender == 0 %}
+      <small class="col-md-2" style="margin-left: -15px; color: green">- Nữ </small>
+      {% elif employee.gender == 1 %}
+      <small class="col-md-2" style="margin-left: -15px; color: green">- Nam</small>
+      {% else %}
+      <small class="col-md-2" style="margin-left: -15px; color: green"  >- Khác</small>
+      {% endif %}
+    </div>
+    <div class="col-md-3">{{ employee.email }} </div>
+    <div class="col-md-2">{{ employee.phone }} </div>
+    <div class="col-md-3" style="flex-basis: 197px">
+      <a class="btn btn-success btn-sm m-1" href="{{ url_for('detail_employee', employee_id=employee.id) }}">Xem</a>
+      <a href="{{ url_for('update_employee', employee_id=employee.id) }}" class="btn btn-primary btn-sm m-1">Sửa</a>
+      <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">
+        Xóa
+      </button>
+    </div>
+  </div>
+</article>
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Xác nhận</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc muốn xóa người này!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy</button>
+        <form action="{{ url_for('delete_employee', employee_id=employee.id) }}" method="POST">
+          <button type="submit" class="btn btn-danger">Đồng ý</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock content %}
+
+{% block script %}
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      errors: [],
+      name: null,
+      age: null,
+      movie: null
+    },
+    methods:{
+      }
+  })
+</script>
+{% endblock script %}
