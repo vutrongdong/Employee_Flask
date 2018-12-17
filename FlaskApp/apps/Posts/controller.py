@@ -1,6 +1,6 @@
-from FlaskApp.apps.Repositories.Posts.post import *
+from FlaskApp.apps.Posts.models import *
 from flask import render_template, url_for, flash, redirect, request, abort
-from FlaskApp.apps.Forms.PostForm import PostForm
+from FlaskApp.apps.Posts.forms import PostForm
 
 # index post
 def index():

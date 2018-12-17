@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from FlaskApp.apps.Repositories.Employees.Employee import *
+from FlaskApp.apps.Employees.models import *
 from flask_wtf.file import FileAllowed, FileField
 from wtforms import StringField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Email, Required, ValidationError
@@ -22,8 +22,7 @@ class EmployeeForm(FlaskForm):
 
     # def validate_email(self, email):
     #     # if email.data != current_user.email:
-    #     a = request.url
-    #     a.split()
+    #     a = request.args.get('employee_id')
     #     employee = Employee.query.filter_by(email=email.data).first()
     #     if employee:
-    #         raise ValidationError('Email này đã tồn tại.'+ a)
+    #         raise ValidationError('Email này đã tồn tại.'+ str(a))

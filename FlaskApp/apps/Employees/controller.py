@@ -2,9 +2,10 @@ import os
 import secrets
 from FlaskApp import app
 from PIL import Image
-from FlaskApp.apps.Repositories.Employees.Employee import *
+from FlaskApp.apps.Employees.models import *
+from FlaskApp.apps.Employees.unils import save_image
+from FlaskApp.apps.Employees.forms import EmployeeForm
 from flask import render_template, url_for, flash, redirect, request, abort
-from FlaskApp.apps.Forms.EmployeeForm import EmployeeForm
 
 # index employee
 def index():
@@ -14,19 +15,6 @@ def index():
 def detail(employee_id):
     employee = Employee.query.get_or_404(employee_id)
     return render_template('Employees/detail.html', title="employee.name", employee=employee)
-# save images
-def save_image(form_image):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_image.filename)
-    image_fn = random_hex + f_ext
-    image_path = os.path.join(app.root_path, 'static/profile_pics', image_fn)
-
-    output_size = (300, 700)
-    i = Image.open(form_image)
-    i.thumbnail(output_size)
-    i.save(image_path)
-
-    return image_fn
 # create employee
 def create():
     form = EmployeeForm()
